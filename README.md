@@ -1,2 +1,2 @@
-# Chess-SoldierNr5-3D
+# Chess-SoldierE4-3D
 A game project which is about chess in real life in a pawn's perspective known as well as a soldier in arabic.  
