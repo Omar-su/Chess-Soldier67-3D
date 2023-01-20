@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed;
 
     public float groundDrag;
+    public GameObject enemy;
 
     public float jumpForce;
     public float jumpCooldown;
@@ -75,6 +76,9 @@ public class PlayerMovement : MonoBehaviour
             Jump();
 
             Invoke(nameof(ResetJump), jumpCooldown);
+        }
+        if(Input.GetKey(KeyCode.E)){
+            Instantiate(enemy, new Vector3(12,13,6), Quaternion.identity);
         }
     }
 
