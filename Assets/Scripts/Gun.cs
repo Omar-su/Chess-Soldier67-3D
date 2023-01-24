@@ -19,6 +19,10 @@ public class Gun : MonoBehaviour{
 
     private float nextTimeToFire = 0f;
 
+    [SerializeField] private Transform _gunpoint;
+    [SerializeField] private GameObject _bulletTrail;
+    [SerializeField] private float _weaponRange = 10f;
+    
     // Update is called once per frame
     void Update ()
     {
@@ -32,36 +36,55 @@ public class Gun : MonoBehaviour{
 
     }
 
-    void Shoot ()
+    void Shoot (){
+    // muzzleflash.Play();
+
+    //TenShenHanEffect();
+
+    RaycastHit hit;
+    if (Physics.Raycast(fpscamera.transform.position, fpscamera.transform.forward, out hit, range))
     {
-        // muzzleflash.Play();
+      UnityEngine.Debug.Log(hit.transform.name);
 
-        flashLight.SetActive(true);
-        print("isactive");
-        StartCoroutine(Flash());
+      Target target = hit.transform.GetComponent<Target>();
+      if (target != null)
+      {
+        target.TakeDamage(damage);
+        hit.rigidbody.AddForce(-hit.normal * impactForce);
 
-        RaycastHit hit;
-        if (Physics.Raycast(fpscamera.transform.position, fpscamera.transform.forward, out hit, range))
-        {
-            UnityEngine.Debug.Log(hit.transform.name);
-
-            Target target = hit.transform.GetComponent<Target>();
-            if (target != null)
-            {
-                target.TakeDamage(damage);
-                hit.rigidbody.AddForce(-hit.normal * impactForce);
-
-            }
-
-            GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            Destroy(impactGO, 0.5f);
-        }
+      }
 
     }
 
+    TrailEffect(hit);
 
-    //after same sec Object to false
-    IEnumerator Flash()
+  }
+
+  private void TrailEffect(RaycastHit hit)
+  {
+    var trail = Instantiate(
+        _bulletTrail,
+        _gunpoint.position,
+        transform.rotation
+    );
+
+    var trailScript = trail.GetComponent<BulletTrail>();
+
+    trailScript.SetTargetPosition(hit.point);
+    
+    GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+    Destroy(impactGO, 0.5f);
+  }
+
+  private void TenShenHanEffect()
+  {
+    flashLight.SetActive(true);
+    StartCoroutine(Flash());
+  }
+
+
+  //after same sec Object to false
+  IEnumerator Flash()
     {
         yield return new WaitForSeconds(flashTime);
         flashLight.SetActive(false);
