@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using UnityEngine;
+using System.Collections;
 
 public class Gun : MonoBehaviour{
 
@@ -10,9 +11,11 @@ public class Gun : MonoBehaviour{
     public float fireRate = 15f;
     public float impactForce = 30f;
 
+    public GameObject flashLight;
     public Camera fpscamera;
     public ParticleSystem muzzleflash;
     public GameObject impactEffect;
+    public float flashTime;
 
     private float nextTimeToFire = 0f;
 
@@ -23,6 +26,7 @@ public class Gun : MonoBehaviour{
         if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire) 
         {
             nextTimeToFire = Time.time + 1f / fireRate;
+            print("shot");
             Shoot();
         }
 
@@ -31,6 +35,10 @@ public class Gun : MonoBehaviour{
     void Shoot ()
     {
         // muzzleflash.Play();
+
+        flashLight.SetActive(true);
+        print("isactive");
+        StartCoroutine(Flash());
 
         RaycastHit hit;
         if (Physics.Raycast(fpscamera.transform.position, fpscamera.transform.forward, out hit, range))
@@ -49,5 +57,14 @@ public class Gun : MonoBehaviour{
             Destroy(impactGO, 0.5f);
         }
 
+    }
+
+
+    //after same sec Object to false
+    IEnumerator Flash()
+    {
+        yield return new WaitForSeconds(flashTime);
+        flashLight.SetActive(false);
+        print("is false");
     }
 }
