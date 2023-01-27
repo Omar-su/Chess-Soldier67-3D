@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour
     public float jumpForce;
     public float jumpCooldown;
     public float airMultiplier;
+    public AudioSource audioSource;
+    public AudioClip clip;
     bool readyToJump;
 
     [HideInInspector] public float walkSpeed;
@@ -33,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     float verticalInput;
 
     Vector3 moveDirection;
-
+    public float volume = 0.5f;
     Rigidbody rb;
 
     private bool disabled = false;
@@ -42,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
+        audioSource.PlayOneShot(clip, 1);
     }
 
     private void Update()
@@ -49,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
         if(!disabled){
             // ground check
             grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, whatIsGround);
+
 
             MyInput();
             SpeedControl();

@@ -10,4 +10,8 @@ public class MoveCamera : MonoBehaviour
     {
         transform.position = cameraPosition.position;
     }
+
+    public void ChangeCameraPosition(Vector3 pos){
+        transform.position = pos;
+    }
 }

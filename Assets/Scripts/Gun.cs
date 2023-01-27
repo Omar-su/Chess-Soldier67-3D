@@ -15,13 +15,14 @@ public class Gun : MonoBehaviour{
     public Camera fpscamera;
     public ParticleSystem muzzleflash;
     public GameObject impactEffect;
+    public AudioSource audioSource;
     public float flashTime;
 
     private float nextTimeToFire = 0f;
 
     [SerializeField] private Transform _gunpoint;
     [SerializeField] private GameObject _bulletTrail;
-    [SerializeField] private float _weaponRange = 10f;
+
     
     // Update is called once per frame
     void Update ()
@@ -30,7 +31,7 @@ public class Gun : MonoBehaviour{
         if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire) 
         {
             nextTimeToFire = Time.time + 1f / fireRate;
-            print("shot");
+            audioSource.PlayOneShot(audioSource.clip);
             Shoot();
         }
 

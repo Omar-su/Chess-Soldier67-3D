@@ -8,8 +8,13 @@ public class PlayerTeleport : MonoBehaviour
     public float teleportRange;
     public AudioSource audioSource;
     public float volume = 0.5f;
+    public MoveCamera moveCamera; 
 
     PlayerMovement playerMovement;
+    public ParticleSystem teleportEffect;
+    public AudioClip clip;
+    public AudioClip clip2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,15 +33,20 @@ public class PlayerTeleport : MonoBehaviour
 
     IEnumerator Teleport(){
         playerMovement.SetDisabled(true);
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
 
         // Teleports the player
         var newpos = orientation.forward * teleportRange;
         newpos.y = 0;
-        audioSource.PlayOneShot(audioSource.clip, volume);
+        
+        // Audio
+        audioSource.PlayOneShot(clip, volume);
+        teleportEffect.Play();
+        moveCamera.ChangeCameraPosition(newpos);
         transform.position += newpos;
         print("position : " + newpos + " y = " + newpos.y);
         yield return new WaitForSeconds(0.1f);
         playerMovement.SetDisabled(false);
+        audioSource.PlayOneShot(clip2);
     }
 }
