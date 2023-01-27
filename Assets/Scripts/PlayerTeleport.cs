@@ -20,6 +20,7 @@ public class PlayerTeleport : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.F)) {
             StartCoroutine("Teleport");
         }
+        print("position in game : " + transform.position+ " y = " + transform.position.y);
     }
 
     IEnumerator Teleport(){
@@ -30,7 +31,8 @@ public class PlayerTeleport : MonoBehaviour
         var newpos = orientation.forward * teleportRange;
         newpos.y = 0;
         transform.position += newpos;
-
+        print("position : " + newpos + " y = " + newpos.y);
+ 
         yield return new WaitForSeconds(0.1f);
         playerMovement.SetDisabled(false);
     }
