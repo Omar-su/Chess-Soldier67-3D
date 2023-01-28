@@ -12,9 +12,13 @@ public class PlayerTeleport : MonoBehaviour
 
     PlayerMovement playerMovement;
     public ParticleSystem teleportEffect;
-    public AudioClip clip;
-    public AudioClip clip2;
-
+    public AudioClip zaHando;
+    public AudioClip reversedZaHando;
+    public float range = 100;
+    public Camera fpscamera;
+    public float offset = 1f;
+    public ParticleSystem objectTeleportEffect;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -27,12 +31,38 @@ public class PlayerTeleport : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.F)) {
             StartCoroutine("Teleport");
             
+        } 
+        if(Input.GetKeyDown(KeyCode.G)){
+            ShootRayCast();
         }
         print("position in game : " + transform.position+ " y = " + transform.position.y);
     }
 
+    void ShootRayCast(){
+
+        RaycastHit hit;
+        
+        if (Physics.Raycast(fpscamera.transform.position, fpscamera.transform.forward, out hit, range))
+        {
+            if (hit.collider.tag == "TeleportableObjects")
+            {
+                print("name hit "+hit.collider.name);
+                StartCoroutine(TeleportObject(hit));
+            }
+        }
+    }
+
+    IEnumerator TeleportObject(RaycastHit hit){
+        audioSource.PlayOneShot(reversedZaHando, volume);
+        Instantiate(objectTeleportEffect, hit.point, Quaternion.identity);
+        objectTeleportEffect.Play();
+        yield return new WaitForSeconds(0.1f);
+        hit.collider.transform.position = new Vector3(transform.position.x + offset, transform.position.y, transform.position.z + offset);
+    }
+
     IEnumerator Teleport(){
         playerMovement.SetDisabled(true);
+        teleportEffect.Play();
         yield return new WaitForSeconds(0.1f);
 
         // Teleports the player
@@ -40,13 +70,12 @@ public class PlayerTeleport : MonoBehaviour
         newpos.y = 0;
         
         // Audio
-        audioSource.PlayOneShot(clip, volume);
-        teleportEffect.Play();
+        audioSource.PlayOneShot(zaHando, volume);
+
         moveCamera.ChangeCameraPosition(newpos);
         transform.position += newpos;
         print("position : " + newpos + " y = " + newpos.y);
         yield return new WaitForSeconds(0.1f);
         playerMovement.SetDisabled(false);
-        audioSource.PlayOneShot(clip2);
     }
 }

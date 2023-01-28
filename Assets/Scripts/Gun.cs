@@ -19,6 +19,7 @@ public class Gun : MonoBehaviour{
     public float flashTime;
 
     private float nextTimeToFire = 0f;
+    public float volume = 0.5f;
 
     [SerializeField] private Transform _gunpoint;
     [SerializeField] private GameObject _bulletTrail;
@@ -31,7 +32,7 @@ public class Gun : MonoBehaviour{
         if (Input.GetButton("Fire1") && Time.time >= nextTimeToFire) 
         {
             nextTimeToFire = Time.time + 1f / fireRate;
-            audioSource.PlayOneShot(audioSource.clip);
+            audioSource.PlayOneShot(audioSource.clip, volume);
             Shoot();
         }
 
@@ -45,7 +46,6 @@ public class Gun : MonoBehaviour{
     RaycastHit hit;
     if (Physics.Raycast(fpscamera.transform.position, fpscamera.transform.forward, out hit, range))
     {
-      UnityEngine.Debug.Log(hit.transform.name);
 
       Target target = hit.transform.GetComponent<Target>();
       if (target != null)

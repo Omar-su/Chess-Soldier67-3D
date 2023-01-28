@@ -44,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
-        audioSource.PlayOneShot(clip, 1);
+
     }
 
     private void Update()
