@@ -10,7 +10,7 @@ public class PlayerTeleport : MonoBehaviour
     public float volume = 0.5f;
     public MoveCamera moveCamera; 
 
-    PlayerMovement playerMovement;
+    NewMovement playerMovement;
     public ParticleSystem teleportEffect;
     public AudioClip zaHando;
     public AudioClip reversedZaHando;
@@ -22,7 +22,7 @@ public class PlayerTeleport : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerMovement = gameObject.GetComponent<PlayerMovement>();
+        playerMovement = gameObject.GetComponent<NewMovement>();
     }
 
     // Update is called once per frame
