@@ -17,7 +17,7 @@ public class PlayerTeleport : MonoBehaviour
     public float range = 100;
     public Camera fpscamera;
     public float offset = 1f;
-    public ParticleSystem objectTeleportEffect;
+    public GameObject objectTeleportEffect;
     
     // Start is called before the first frame update
     void Start()
@@ -54,10 +54,10 @@ public class PlayerTeleport : MonoBehaviour
 
     IEnumerator TeleportObject(RaycastHit hit){
         audioSource.PlayOneShot(reversedZaHando, volume);
-        Instantiate(objectTeleportEffect, hit.point, Quaternion.identity);
-        objectTeleportEffect.Play();
+        GameObject effect = Instantiate(objectTeleportEffect, hit.point, Quaternion.identity);
+        Destroy(effect, 0.5f);        
         yield return new WaitForSeconds(0.1f);
-        hit.collider.transform.position = new Vector3(transform.position.x + offset, transform.position.y, transform.position.z + offset);
+        hit.collider.transform.position = transform.position + ( offset * orientation.forward);
     }
 
     IEnumerator Teleport(){

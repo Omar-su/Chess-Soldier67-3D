@@ -397,15 +397,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7e1595940d6624db9c111f54637b3a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7e1595940d6624db9c111f54637b3a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7e1595940d6624db9c111f54637b3a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: df7e1595940d6624db9c111f54637b3a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7230,8 +7230,8 @@ MonoBehaviour:
   reversedZaHando: {fileID: 8300000, guid: 3ae1334e7c2d1d94f98e496f3be685b5, type: 3}
   range: 100
   fpscamera: {fileID: 963194227}
-  offset: 1
-  objectTeleportEffect: {fileID: 664902037428493133, guid: e6817f61247c5e642b37ce29df9a2052, type: 3}
+  offset: 3
+  objectTeleportEffect: {fileID: 8321233245418456736, guid: e6817f61247c5e642b37ce29df9a2052, type: 3}
 --- !u!82 &1540442771
 AudioSource:
   m_ObjectHideFlags: 0
