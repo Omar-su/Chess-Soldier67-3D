@@ -7284,7 +7284,7 @@ MonoBehaviour:
   reversedZaHando: {fileID: 8300000, guid: 3ae1334e7c2d1d94f98e496f3be685b5, type: 3}
   range: 100
   fpscamera: {fileID: 963194227}
-  offset: 3
+  offset: 9.5
   objectTeleportEffect: {fileID: 8321233245418456736, guid: e6817f61247c5e642b37ce29df9a2052, type: 3}
   spotLight: {fileID: 1346632534}
   spotLight2: {fileID: 1857883535}
@@ -8516,7 +8516,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1857382930
 Transform:
   m_ObjectHideFlags: 0
