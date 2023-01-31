@@ -6,6 +6,7 @@ public class NewMovement : MonoBehaviour
 {
     public CharacterController controller;
     public Transform orientation;
+    public GameObject enemy;
 
     public float speed = 12f;
     public float gravity = -9.81f;
@@ -46,6 +47,10 @@ public class NewMovement : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
 
             controller.Move(velocity * Time.deltaTime);
+            if(Input.GetKey(KeyCode.E)){
+                Instantiate(enemy, new Vector3(12,13,6), Quaternion.identity);
+            }
+        
         }
     }
 

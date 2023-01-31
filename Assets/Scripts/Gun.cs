@@ -51,7 +51,7 @@ public class Gun : MonoBehaviour{
       if (target != null)
       {
         target.TakeDamage(damage);
-        hit.rigidbody.AddForce(-hit.normal * impactForce);
+        hit.rigidbody.AddForce(-hit.normal * impactForce, ForceMode.Impulse);
 
       }
 
