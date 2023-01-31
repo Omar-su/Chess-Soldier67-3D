@@ -37,7 +37,6 @@ public class PlayerTeleport : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.G)){
             ShootRayCast();
         }
-        print("position in game : " + transform.position+ " y = " + transform.position.y);
     }
 
     void ShootRayCast(){
@@ -48,7 +47,6 @@ public class PlayerTeleport : MonoBehaviour
         {
             if (hit.collider.tag == "TeleportableObjects")
             {
-                print("name hit "+hit.collider.name);
                 StartCoroutine(TeleportObject(hit));
             }
         }
