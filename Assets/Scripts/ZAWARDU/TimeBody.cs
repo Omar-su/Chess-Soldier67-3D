@@ -46,8 +46,11 @@ public class TimeBody : MonoBehaviour
     }
     public void ContinueTime()
     {
-        rb.isKinematic = false;
+        if(rb != null){
+            rb.isKinematic = false;
+            rb.velocity = recordedVelocity * recordedMagnitude; //Adds back the recorded velocity when time continues
+        }
         IsStopped = false;
-        rb.velocity = recordedVelocity * recordedMagnitude; //Adds back the recorded velocity when time continues
+
     }
 }

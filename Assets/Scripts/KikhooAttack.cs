@@ -17,6 +17,8 @@ public class KikhooAttack : MonoBehaviour
     public float radius = 10f;
     public LayerMask layerMask;
     public float damage = 5f;
+    public Color changedColor;
+    public Color origColor;
 
     // Update is called once per frame
     void Update()
@@ -32,20 +34,20 @@ public class KikhooAttack : MonoBehaviour
     }
 
     IEnumerator kikhooAttack(){
+        spotLight.SetActive(true);
+        Light light = spotLight.GetComponent<Light>();
         for(int i = 0; i < flashes; i++) {
-            spotLight.SetActive(true);
+            spotLight.GetComponent<Light>().color = origColor;
             yield return new WaitForSeconds(waitTime);
-            spotLight.SetActive(false);
+            spotLight.GetComponent<Light>().color = changedColor;
             yield return new WaitForSeconds(waitTime);   
         }
-        spotLight.SetActive(true);
         //CameraShaker.Instance.ShakeOnce(4f, 4f, 0.1f, 1f);
         yield return new WaitForSeconds(waitTime);
         audioSource.PlayOneShot(kikohoSound, volume);
         // Apply force to objects
         Collider[] colliders = Physics.OverlapSphere(fpscamera.transform.position + fpscamera.transform.forward * distance, radius, layerMask);
         foreach(Collider c in colliders) {
-            print("name of the object " + c.name);
             c.GetComponent<Rigidbody>().AddForce(kikhooForce * fpscamera.transform.forward, ForceMode.Impulse);
             Target target = c.GetComponent<Target>();
             target.TakeDamage(damage);
