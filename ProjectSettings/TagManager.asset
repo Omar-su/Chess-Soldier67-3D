@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - TeleportableObjects
+  - TimeManager
   layers:
   - Default
   - TransparentFX

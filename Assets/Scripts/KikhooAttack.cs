@@ -16,6 +16,7 @@ public class KikhooAttack : MonoBehaviour
     public float distance = 10f;
     public float radius = 10f;
     public LayerMask layerMask;
+    public float damage = 5f;
 
     // Update is called once per frame
     void Update()
@@ -46,7 +47,8 @@ public class KikhooAttack : MonoBehaviour
         foreach(Collider c in colliders) {
             print("name of the object " + c.name);
             c.GetComponent<Rigidbody>().AddForce(kikhooForce * fpscamera.transform.forward, ForceMode.Impulse);
-
+            Target target = c.GetComponent<Target>();
+            target.TakeDamage(damage);
         }
         yield return new WaitForSeconds(waitTime);
         spotLight.SetActive(false);
