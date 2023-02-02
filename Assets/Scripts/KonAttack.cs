@@ -21,6 +21,10 @@ public class KonAttack : MonoBehaviour
     public float damage = 5f;
     public float konForce;
     public float timeBeforeDestruction = .1f;
+    private bool isActivated = false;
+    public GameObject sphere;
+    public Color color = Color.red;
+
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +35,8 @@ public class KonAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.H)) {
+        if(Input.GetKeyDown(KeyCode.H) && !isActivated) {
+            isActivated = true;
             StartCoroutine("AttackWithKon");
         }
     }
@@ -51,18 +56,33 @@ public class KonAttack : MonoBehaviour
         }
         timemanager.StopTime();
         
-        
+        Vector3 pos = fpscamera.transform.position + fpscamera.transform.forward * distance; 
         yield return new WaitForSeconds(timeBeforeDestruction);  
-        Collider[] colliders = Physics.OverlapSphere(fpscamera.transform.position + fpscamera.transform.forward * distance, radius, layerMask);
+        Collider[] colliders = Physics.OverlapSphere(pos, radius, layerMask);
+        //Instantiate(sphere, fpscamera.transform.position + fpscamera.transform.forward * distance, Quaternion.identity);
+
+        //sphere.transform.localScale = Vector3.one * radius;
+        //sphere.transform.position = fpscamera.transform.position + fpscamera.transform.forward * distance;
+        // Set the color for the sphere
+        // Gizmos.color = color;
+
+        // // Render the sphere in the scene view
+        // Gizmos.DrawWireSphere(pos, radius);
+        //         // Render the sphere in the scene view
+        // for (int i = 0; i < colliders.Length; i++)
+        // {
+        //     Gizmos.DrawLine(pos, colliders[i].transform.position);
+        // }
         foreach(Collider c in colliders) {
             // c.GetComponent<Rigidbody>().AddForce(konForce * fpscamera.transform.forward, ForceMode.Impulse);
             // Target target = c.GetComponent<Target>();
             // target.TakeDamage(damage);
             Destroy(c.gameObject);
         }
-        yield return new WaitForSeconds(5f); 
+        yield return new WaitForSeconds(3f); 
         timemanager.ContinueTime();
         spotlight.SetActive(false);
+        isActivated = false;
         //audioSource.Play(eatSound);
     }
 }
