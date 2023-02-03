@@ -2306,6 +2306,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1309487348}
   - component: {fileID: 1309487347}
+  - component: {fileID: 1309487350}
   m_Layer: 0
   m_Name: TimeManager
   m_TagString: TimeManager
@@ -2341,6 +2342,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1309487350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309487346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2e505d47d18383429564d82c727641a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rewindObj: {fileID: 1685963003}
+  flashes: 17
+  waitTime: 0.11
+  modt: 0.08
+  modWaitTime: 0
+  spotLight: {fileID: 315965932}
+  audioSource: {fileID: 1685963004}
+  color1: {r: 1, g: 1, b: 1, a: 0}
+  color2: {r: 0.9607843, g: 1, b: 0, a: 0}
+  analogGlitch: {fileID: 963194233}
+  colorDrift: 0.5
+  scanLineJitter: 0.03
+  verticalJump: 0.03
+  horizontalShake: 0.1
 --- !u!1 &1346632534
 GameObject:
   m_ObjectHideFlags: 0
@@ -3172,18 +3199,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isRewinding: 0
   timeToRewind: 5
-  flashes: 17
-  waitTime: 0.11
-  modt: 0.08
-  modWaitTime: 0
-  spotLight: {fileID: 1416133030}
-  color1: {r: 1, g: 1, b: 1, a: 0}
-  color2: {r: 0.9593928, g: 1, b: 0, a: 0}
-  analogGlitch: {fileID: 963194233}
-  colorDrift: 0.5
-  scanLineJitter: 0.03
-  verticalJump: 0.03
-  horizontalShake: 0.1
 --- !u!82 &1685963004
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3286,7 +3301,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh28802
+  m_Name: pb_Mesh28828
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
