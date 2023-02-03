@@ -14,7 +14,9 @@ public class RewindEffects : MonoBehaviour
     public AudioSource audioSource;
     public Color color1;
     public Color color2;
-    public AnalogGlitch analogGlitch;
+    public GameObject analogGameObj;
+    AnalogGlitch analogGlitch;
+    
     public float colorDrift = .5f;
     public float scanLineJitter = .03f;
     public float verticalJump = .03f;
@@ -24,7 +26,7 @@ public class RewindEffects : MonoBehaviour
     void Start()
     {
         isfirstTime = true;
-
+        analogGlitch = analogGameObj.GetComponent<AnalogGlitch>();
     }
 
 
@@ -39,12 +41,14 @@ public class RewindEffects : MonoBehaviour
         }else{
             if(rewindObj.isRewinding && isfirstTime){
                 audioSource.Play();
+                analogGlitch.enabled = true;
                 Glitch(colorDrift, scanLineJitter, verticalJump, horizontalShake);
                 StartCoroutine("LightEffects");
                 isfirstTime = false;
             }else if (!isfirstTime && !rewindObj.isRewinding){
                 Glitch(0,0,0,0);
                 spotLight.SetActive(false);
+                analogGlitch.enabled = false;
                 audioSource.Stop();
                 isfirstTime = true;
             }

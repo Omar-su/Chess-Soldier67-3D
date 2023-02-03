@@ -13,8 +13,8 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        anim = GetComponent<Animator>();
-        agent = GetComponent<NavMeshAgent>();
+        //anim = GetComponent<Animator>();
+        //agent = GetComponent<NavMeshAgent>();
         timemanager = GameObject.FindGameObjectWithTag("TimeManager").GetComponent<TimeManager>();
     }
 
@@ -33,12 +33,12 @@ public class Enemy : MonoBehaviour
         }
         if(timemanager.TimeIsStopped)
         {
-        agent.velocity = Vector3.zero; // stop moving
-        anim.speed = 0f;  //stop the animation
+        //agent.velocity = Vector3.zero; // stop moving
+        //anim.speed = 0f;  //stop the animation
         }
         else
         {
-        anim.speed = 1f;
+        //anim.speed = 1f;
         }
         
     }

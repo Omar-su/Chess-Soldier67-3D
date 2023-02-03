@@ -47,7 +47,7 @@ public class NewMovement : MonoBehaviour
             velocity.y += gravity * Time.deltaTime;
 
             controller.Move(velocity * Time.deltaTime);
-            if(Input.GetKey(KeyCode.T)){
+            if(enemy != null && Input.GetKey(KeyCode.T)){
                 Instantiate(enemy, new Vector3(12,13,6), Quaternion.identity);
             }
         

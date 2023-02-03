@@ -11,6 +11,7 @@ public class RewindTime : MonoBehaviour
     Vector3 origVelocity;
     bool isOrigVelocity = true;
     Rigidbody rb;
+    public int frames = 2;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,7 +65,11 @@ public class RewindTime : MonoBehaviour
             PointsInTime p = (PointsInTime) rewindPoints[0];
             transform.position = p.GetVector3();
             transform.rotation = p.GetRotation();
-            rewindPoints.RemoveAt(0);
+            for(int i = 0; i < frames; i++) {
+                if (rewindPoints.Count > 0){
+                    rewindPoints.RemoveAt(0);
+                }
+            }
         }else{
             StopRewind();
             rb.velocity = origVelocity;
