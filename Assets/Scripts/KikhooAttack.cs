@@ -19,11 +19,13 @@ public class KikhooAttack : MonoBehaviour
     public float damage = 5f;
     public Color changedColor;
     public Color origColor;
+    public Animator anim;
 
     // Update is called once per frame
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.K)) {
+            anim.SetTrigger("Kikho");
             Attack();
         }
     }
@@ -54,6 +56,9 @@ public class KikhooAttack : MonoBehaviour
         }
         yield return new WaitForSeconds(waitTime);
         spotLight.SetActive(false);
+        anim.ResetTrigger("Kikho");
+
+
     }
     
 }
