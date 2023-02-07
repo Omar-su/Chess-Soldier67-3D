@@ -20,6 +20,7 @@ public class PlayerTeleport : MonoBehaviour
     public GameObject objectTeleportEffect;
     public GameObject spotLight;
     public GameObject spotLight2;
+    public Animator anim;
     
     // Start is called before the first frame update
     void Start()
@@ -47,6 +48,7 @@ public class PlayerTeleport : MonoBehaviour
         {
             if (hit.collider.tag == "TeleportableObjects")
             {
+                anim.SetTrigger("ComeOverHere");
                 StartCoroutine(TeleportObject(hit));
             }
         }
@@ -60,6 +62,7 @@ public class PlayerTeleport : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         spotLight2.SetActive(false);
         hit.collider.transform.position = transform.position + ( offset * orientation.forward);
+        anim.ResetTrigger("ComeOverHere");
     }
 
     IEnumerator Teleport(){
