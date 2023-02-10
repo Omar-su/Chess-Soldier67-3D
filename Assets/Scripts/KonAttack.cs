@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using EZCameraShake;
 public class KonAttack : MonoBehaviour
 {
     
@@ -70,6 +70,7 @@ public class KonAttack : MonoBehaviour
             // target.TakeDamage(damage);
             Destroy(c.gameObject);
         }
+        CameraShaker.Instance.ShakeOnce(4f, 7f, 1f, 1f);
         timemanager.ContinueTime();
         spotlight.SetActive(false);
         isActivated = false;

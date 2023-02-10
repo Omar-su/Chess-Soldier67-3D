@@ -1,8 +1,7 @@
 using System;
 using System.Diagnostics;
 using UnityEngine;
-using System.Collections;
-
+using EZCameraShake;
 public class Gun : MonoBehaviour{
 
 
@@ -38,14 +37,15 @@ public class Gun : MonoBehaviour{
 
     }
 
-    void Shoot (){
-    // muzzleflash.Play();
+  void Shoot (){
+    muzzleflash.Play();
 
     //TenShenHanEffect();
 
     RaycastHit hit;
     if (Physics.Raycast(fpscamera.transform.position, fpscamera.transform.forward, out hit, range))
     {
+      //CameraShaker.Instance.ShakeOnce(5f,5f,.5f,.5f);
 
       Target target = hit.transform.GetComponent<Target>();
       if (target != null)
@@ -77,18 +77,5 @@ public class Gun : MonoBehaviour{
     Destroy(impactGO, 0.5f);
   }
 
-  private void TenShenHanEffect()
-  {
-    flashLight.SetActive(true);
-    StartCoroutine(Flash());
-  }
 
-
-  //after same sec Object to false
-  IEnumerator Flash()
-    {
-        yield return new WaitForSeconds(flashTime);
-        flashLight.SetActive(false);
-        print("is false");
-    }
 }
