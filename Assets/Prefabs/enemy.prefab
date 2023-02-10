@@ -115,6 +115,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 50
+  dissolveEffect: {fileID: 8169177079005150412, guid: 77a591803b09c0649b6dfbaffbeccbf7,
+    type: 3}
 --- !u!54 &746931054162184484
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -170,4 +172,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRewinding: 0
-  timeToRewind: 5
+  timeToRewind: 2
+  frames: 2

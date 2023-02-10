@@ -70,7 +70,7 @@ public class KonAttack : MonoBehaviour
             // target.TakeDamage(damage);
             Destroy(c.gameObject);
         }
-        CameraShaker.Instance.ShakeOnce(4f, 7f, 1f, 1f);
+        //CameraShaker.Instance.ShakeOnce(4f, 7f, 1f, 1f);
         timemanager.ContinueTime();
         spotlight.SetActive(false);
         isActivated = false;
