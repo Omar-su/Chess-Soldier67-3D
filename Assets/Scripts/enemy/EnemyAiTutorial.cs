@@ -27,6 +27,7 @@ public class EnemyAiTutorial : MonoBehaviour
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
+    bool isAttacking = false;
 
     private void Awake()
     {
@@ -47,7 +48,7 @@ public class EnemyAiTutorial : MonoBehaviour
 
         if (playerInAttackRange && playerInSightRange) StartCoroutine("AttackPlayer");
 
-        else if (playerInSightRange && !playerInAttackRange) ChasePlayer();
+        else if (playerInSightRange && !playerInAttackRange && !isAttacking) ChasePlayer();
         else Patroling();
     }
 
@@ -91,6 +92,7 @@ public class EnemyAiTutorial : MonoBehaviour
     // Called by an animation event
     IEnumerator AttackPlayer()
     {
+        isAttacking = true;
         // Stop moving and trigger idle animation
         animator.SetBool("run", false);
         //Make sure enemy doesn't move
@@ -113,6 +115,7 @@ public class EnemyAiTutorial : MonoBehaviour
             Invoke(nameof(ResetAttack), timeBetweenAttacks);
         }
         yield return new WaitForSeconds(.7f);
+        isAttacking = false;
     }
 
     // }
