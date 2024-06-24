@@ -10,16 +10,18 @@ public class Target : MonoBehaviour
     public void TakeDamage (float amount)
     {
         health -= amount;
+        // Debug.Log($"Health now is: {health}");
         if (health <= 0f)
         {
-            GameObject impactGO = Instantiate(dissolveEffect, transform);
-            Destroy(impactGO, 1f);
+            GameObject impactGO = Instantiate(dissolveEffect, transform.position, Quaternion.identity);
+            impactGO.transform.parent = transform;
+            Destroy(impactGO, 2f);
             Die();
         }
     }
 
     void Die()
     {
-        Destroy(gameObject, 2f);
+        Destroy(gameObject, 1f);
     }
 } 

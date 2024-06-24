@@ -25,7 +25,7 @@ public class NewMovement : MonoBehaviour
     void Update()
     {
         if(!disabled) {
-            isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.3f, groundMask);
+            isGrounded = Physics.Raycast(groundCheck.position, Vector3.down, playerHeight * 0.5f + 0.3f, groundMask);
 
             if(isGrounded && velocity.y < 0)
             {

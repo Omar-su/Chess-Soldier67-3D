@@ -1,58 +1,79 @@
+using System.Collections;
 using UnityEngine;
 
 public class ObjectMovement : MonoBehaviour
 {
-    public Transform targetObject;
-    public float movementSpeed = 5f;
-    private Vector3 originalPosition;
-    private bool movingTowardsTarget = true;
+   private Animator bossAnimator;
+    private Transform player;
+    public float detectionRange = 400f;
+    public LayerMask playerLayer;
+    private AudioSource audioSource;
+    public UnityEngine.AI.NavMeshAgent agent;
 
-    private void Start()
+    private bool isPlayerInRange = false;
+    public float walkingSpeed = 2.0f; // Adjust the speed as needed
+
+    private TimeManager timeManager;
+    private Transform targetPoint;
+
+    public UnityEngine.AI.NavMeshAgent navMeshAgent;
+
+    public float shootingRange = 300f;
+    private void Awake()
     {
-        originalPosition = transform.position;
+        player = GameObject.Find("Player").transform;
+        if(player) {
+            targetPoint = player.Find("targetPoint");
+        }
+        timeManager = GameObject.FindGameObjectWithTag("TimeManager").GetComponent<TimeManager>();
+        if (timeManager == null)
+        {
+            Debug.LogError("TimeManager not found");
+        }
+        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+  
+
     }
 
-    private void Update()
+
+    void Start()
     {
-        if (movingTowardsTarget)
-        {
-            MoveTowardsTarget();
-        }
-        else
-        {
-            MoveBackToOriginalPosition();
-        }
+        StartCoroutine(BossBehavior());
     }
 
-    private void MoveTowardsTarget()
+    IEnumerator BossBehavior()
     {
-        Vector3 targetDirection = targetObject.position - transform.position;
-        Vector3 movement = targetDirection.normalized * movementSpeed * Time.deltaTime;
-        transform.Translate(movement, Space.World);
+        // Play the sitting animation
+        bossAnimator.SetTrigger("SitTrigger");
+        yield return new WaitForSeconds(bossAnimator.GetCurrentAnimatorStateInfo(0).length);
 
-        if (Vector3.Distance(transform.position, targetObject.position) <= movement.magnitude)
+        // Stand up and start walking towards the player if within detection range
+        while (Vector3.Distance(transform.position, player.position) > detectionRange)
         {
-            movingTowardsTarget = false;
+            yield return null;
         }
 
-        // Rotate character to face the target object
-        Quaternion targetRotation = Quaternion.LookRotation(targetDirection, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, 10f * Time.deltaTime);
-    }
+        bossAnimator.SetTrigger("StandUpTrigger");
+        yield return new WaitForSeconds(bossAnimator.GetCurrentAnimatorStateInfo(0).length);
 
-    private void MoveBackToOriginalPosition()
-    {
-        Vector3 originalDirection = originalPosition - transform.position;
-        Vector3 movement = originalDirection.normalized * movementSpeed * Time.deltaTime;
-        transform.Translate(movement, Space.World);
+        // Play walking animation and move towards the player
+        bossAnimator.SetTrigger("StartWalking");
+        bossAnimator.SetBool("IsWalking", true);
 
-        if (Vector3.Distance(transform.position, originalPosition) <= movement.magnitude)
+        while (Vector3.Distance(transform.position, player.position) > shootingRange)
         {
-            movingTowardsTarget = true;
+            navMeshAgent.SetDestination(player.position);
+            yield return null;
         }
 
-        // Rotate character to face its original position
-        Quaternion originalRotation = Quaternion.LookRotation(originalDirection, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, originalRotation, 10f * Time.deltaTime);
+        // Once in shooting range, stop walking and shoot
+        bossAnimator.SetBool("IsWalking", false);
+
+        // Add your shooting logic here, e.g., instantiate bullets, play shooting animation, etc.
+        bossAnimator.SetTrigger("FireTrigger");
+
+        yield break;
     }
+
+
 }

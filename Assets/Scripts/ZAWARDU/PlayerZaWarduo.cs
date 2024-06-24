@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Kino;
 
 public class PlayerZaWarduo : MonoBehaviour
 {
@@ -15,11 +16,19 @@ public class PlayerZaWarduo : MonoBehaviour
     public GameObject spotlight1;
     public Color changedColor;
     public Color origColor;
-    
+
+    public float colorDrift = 0;
+    public float scanLineJitter = .02f;
+    public float verticalJump = 0;
+    public float horizontalShake = 0;
+    public GameObject analogGameObj;
+    AnalogGlitch analogGlitch;
     // Start is called before the first frame update
     void Start()
     {
         timemanager = GameObject.FindGameObjectWithTag("TimeManager").GetComponent<TimeManager>();
+        analogGlitch = analogGameObj.GetComponent<AnalogGlitch>();
+
     }
 
     // Update is called once per frame
@@ -43,11 +52,19 @@ public class PlayerZaWarduo : MonoBehaviour
         timemanager.ContinueTime();
         spotlight1.SetActive(false);
 
+        Glitch(0,0,0,0);
+        analogGlitch.enabled = false;
+
     }
 
     IEnumerator AudioDelay(){
         audioSource.PlayOneShot(timeStopsound, volume);
         spotlight1.SetActive(true);
+
+        analogGlitch.enabled = true;
+        Glitch(colorDrift, scanLineJitter, verticalJump, horizontalShake);
+
+
         Light light = spotlight1.GetComponent<Light>();
         for(int i = 0; i < flashes; i++) {
             
@@ -64,6 +81,11 @@ public class PlayerZaWarduo : MonoBehaviour
         audioSource.Play();
     }
 
-
+    void Glitch(float colorDrift, float scanLineJitter,float verticalJump, float horizontalShake){
+        analogGlitch.colorDrift = colorDrift;
+        analogGlitch.scanLineJitter = scanLineJitter;
+        analogGlitch.verticalJump = verticalJump;
+        analogGlitch.horizontalShake = horizontalShake;
+    }
 
 }

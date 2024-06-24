@@ -6,7 +6,7 @@ public class PortalTeleporter : MonoBehaviour {
 
 	public Transform player;
 	public Transform reciever;
-
+	public Vector3 offset = new Vector3(1, 1, 1);
 	private bool playerIsOverlapping = false;
 
 	// Update is called once per frame
@@ -25,7 +25,7 @@ public class PortalTeleporter : MonoBehaviour {
 				player.Rotate(Vector3.up, rotationDiff);
 
 				Vector3 positionOffset = Quaternion.Euler(0f, rotationDiff, 0f) * portalToPlayer;
-				player.position = reciever.position + positionOffset;
+				player.position = reciever.position + positionOffset + offset;
 
 				playerIsOverlapping = false;
 			}

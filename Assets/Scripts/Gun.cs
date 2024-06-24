@@ -48,12 +48,19 @@ public class Gun : MonoBehaviour{
       //CameraShaker.Instance.ShakeOnce(5f,5f,.5f,.5f);
 
       Target target = hit.transform.GetComponent<Target>();
+      EnemyAiTutorial enemy = hit.transform.GetComponent<EnemyAiTutorial>();
+      HealthSystem heathSystem = hit.transform.GetComponent<HealthSystem>();
       if (target != null)
       {
         target.TakeDamage(damage);
-        hit.rigidbody.AddForce(-hit.normal * impactForce, ForceMode.Impulse);
+        // hit.rigidbody.AddForce(-hit.normal * impactForce, ForceMode.Impulse);
 
-      }
+      } else if(enemy != null) {
+        // hit.rigidbody.AddForce(-hit.normal * impactForce, ForceMode.Impulse);
+        enemy.TakeDamage(damage);
+      }else if(heathSystem != null) {
+        heathSystem.TakeDamage(damage);
+      } 
 
     }
 

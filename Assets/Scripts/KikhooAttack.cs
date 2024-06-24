@@ -45,7 +45,13 @@ public class KikhooAttack : MonoBehaviour
         foreach(Collider c in colliders) {
             c.GetComponent<Rigidbody>().AddForce(kikhooForce * fpscamera.transform.forward, ForceMode.Impulse);
             Target target = c.GetComponent<Target>();
-            target.TakeDamage(damage);
+            EnemyAiTutorial enemy = c.GetComponent<EnemyAiTutorial>();
+            if(target != null){
+                target.TakeDamage(damage);
+
+            } else if(enemy != null) {
+                target.TakeDamage(damage);
+            } 
         }
     }
 

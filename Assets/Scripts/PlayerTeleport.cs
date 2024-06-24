@@ -9,6 +9,8 @@ public class PlayerTeleport : MonoBehaviour
     public AudioSource audioSource;
     public float volume = 0.5f;
     public MoveCamera moveCamera; 
+    public Transform playerCamBoogieWoogie; 
+    
 
     NewMovement playerMovement;
     public ParticleSystem teleportEffect;
@@ -38,7 +40,40 @@ public class PlayerTeleport : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.G)){
             ShootRayCast();
         }
+        if(Input.GetKeyDown(KeyCode.O)){
+            BoogieWoogie();
+        }
     }
+
+    void BoogieWoogie(){
+        RaycastHit hit;
+        
+        if (Physics.Raycast(fpscamera.transform.position, fpscamera.transform.forward, out hit, range))
+        {
+            if (hit.collider.tag == "TeleportableObjects")
+            {
+                anim.SetTrigger("ComeOverHere");
+                StartCoroutine(Switch(hit));
+            }
+        }
+    }
+
+
+    IEnumerator Switch(RaycastHit hit){
+        spotLight2.SetActive(true);
+        audioSource.PlayOneShot(reversedZaHando, volume);
+        GameObject effect = Instantiate(objectTeleportEffect, hit.point, Quaternion.identity);
+        Destroy(effect, 0.5f);        
+        yield return new WaitForSeconds(0.1f);
+        spotLight2.SetActive(false);
+        Vector3 objetCurrrentPos = hit.collider.transform.position;
+        hit.collider.transform.position = transform.position;
+        transform.position = objetCurrrentPos;
+        playerCamBoogieWoogie.rotation = Quaternion.Euler(playerCamBoogieWoogie.rotation.x, playerCamBoogieWoogie.rotation.y + 180, playerCamBoogieWoogie.rotation.z);
+
+        anim.ResetTrigger("ComeOverHere");
+    }
+
 
     void ShootRayCast(){
 
